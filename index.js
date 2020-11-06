@@ -1,7 +1,18 @@
-const express = require("express");
-const morgan = require("morgan");
+const express = require("express"),
+  bodyParser = require("body-parser"),
+  uuid = require("uuid"),
+  morgan = require("morgan");
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(express.static("public"));
+app.use(morgan("common"));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 let movies = [
   {
@@ -100,7 +111,7 @@ app.get("/movies/:title/genre", (req, res) => {
 });
 
 //get information on director by director name
-app.get("/movies/:director", (req, res) => {
+app.get("/movies/:name/director", (req, res) => {
   res.send("Success getting director data by director name.");
 });
 
@@ -139,14 +150,6 @@ app.delete("/user/:username", (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
-});
-
-app.use(express.static("public"));
-app.use(morgan("common"));
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
 });
 
 app.listen(8080, () => console.log("Your app is listening on port 8080."));
