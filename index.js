@@ -24,7 +24,7 @@ let movies = [
       birthyear: 1957,
       deathyear: "-"
     },
-    genre: "comedy-drama",
+    genre: "drama",
     description:
       "Almost famous is a semi-biographical film based on the life of director Cameron Crowe detailing his path to becoming a writer for Rolling Stone Magazine.",
     image: "imageURL",
@@ -39,7 +39,7 @@ let movies = [
       birthyear: 1962,
       deathyear: "-"
     },
-    genre: "musical drama",
+    genre: "musical",
     description:
       "Moulin Rouge is a musical drama based on the Paris cabaret in the late 19th and early 20th centuries. Moulin Rouge chronicles the love story between a poor writer and a high class courtesan",
     image: "imgURL",
@@ -54,7 +54,7 @@ let movies = [
       birthyear: 1944,
       deathyear: 2012
     },
-    genre: "action romance",
+    genre: "action",
     description:
       "Two unassuming lovers cross paths after Clarence Worley's co-worker sends a callgirl to meet him in a movie theater. Danger and adventure ensue.",
     image: "imageURL",
@@ -69,7 +69,7 @@ let movies = [
       birthyear: 1947,
       deathyear: "-"
     },
-    genre: "comedy drama",
+    genre: "drama",
     description:
       "teenagers working at a record store save the day after a co-worker blows all the store's money gambling.",
     image: "imageURL",
@@ -84,7 +84,7 @@ let movies = [
       birthyear: 1960,
       deathyear: "-"
     },
-    genre: "comedy, coming of age story",
+    genre: "comedy",
     description:
       "It's the last day of school and it's time for the incoming freshmen to endure initiation into high school culture.",
     image: "imageURL",
@@ -107,6 +107,11 @@ app.get("/movies/:title", (req, res) => {
 
 //get movie genre and description by title
 app.get("/movies/:title/genre", (req, res) => {
+  res.json(
+    movies.find(movie => {
+      return movie.director === req.params.director;
+    })
+  );
   res.send("Success getting movie genre by title");
 });
 
