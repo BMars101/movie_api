@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=" />
+    <link rel="stylesheet" href="/style.css" />
     <title>myFlix App</title>
   </head>
   <body>
@@ -14,6 +15,144 @@
       Users are able to sign up, update their personal information and create a
       list of their favorite movies.
     </p>
+    <table>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP method</th>
+        <th>Req Body Format</th>
+        <th>Res Body Format</th>
+      </tr>
+      <tr>
+        <td>Get List of Movies</td>
+        <td>/movies/</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object with all movie details</td>
+      </tr>
+      <tr>
+        <td>Get Information on a single movie by title</td>
+        <td>/movies/:title/</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object showing data on a single movie, ex: <br />{<br />
+          title: "",<br />
+          genre: "",<br />
+          description: "" ,<br />
+          director:{name: bio: birth-year: death-year: } ,<br />
+          image URL: "",<br />
+          feature: "yes/no"<br />
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Get data about a genre</td>
+        <td>/movies/genre/:title</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          Return description of movie by title, ex:
+          <br />
+          <br />[title] is a [genre] film about [description]
+        </td>
+      </tr>
+      <tr>
+        <td>Get information about a director by name</td>
+        <td>/movies/:director</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object with director information<br />
+          {<br />
+          name: "", <br />
+          bio: "", <br />
+          birth-year: "", <br />
+          death-year: "" <br />
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Allow user to register</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>
+          JSON object with user infromation<br />
+          {<br />
+          Username: [username]<br />
+          Password:[password]<br />
+          Email address: [email address]<br />
+          }
+        </td>
+        <td>
+          JSON object that returns user details<br />
+          {<br />
+          Username: "BMars101"<br />
+          Password: "*******" <br />
+          Email address: "beth.ellieday@gmail.com" <br />
+          }
+        </td>
+      </tr>
+
+      <tr>
+        <td>Allow user to update username</td>
+        <td>/users/:username</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>
+          send text message indicating username was successfully updated ex:
+          ":username was successfully updated"
+        </td>
+      </tr>
+
+      <tr>
+        <td>Add a movie to movie list</td>
+        <td>users/:username/movies/:title</td>
+        <td>POST</td>
+        <td>
+          JSON object with movie details <br />{<br />
+          title: "",<br />
+          genre: "",<br />
+          description: "" ,<br />
+          director:{name: bio: birth-year: death-year: } ,<br />
+          image URL: "",<br />
+          feature: "yes/no"<br />
+          }
+        </td>
+        <td>
+          JSON object with the movie and details just added <br />{<br />
+          title: "",<br />
+          genre: "",<br />
+          description: "" ,<br />
+          director:{name: bio: birth-year: death-year: } ,<br />
+          image URL: "",<br />
+          feature: "yes/no"<br />
+          }
+        </td>
+      </tr>
+      <tr>
+        <td>Delete a movie from movie list</td>
+        <td>user/:username/movies/:title</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          Text message indicating the movie was successfully removed from list.
+          <br />
+          "movie was successfully removed from list."
+        </td>
+      </tr>
+      <tr>
+        <td>Allow user to deregister</td>
+        <td>/users/:username</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          text message indicating user successfully deregistered account<br />":username
+          successfully deregistered"
+        </td>
+      </tr>
+    </table>
+
     <script src="index.js"></script>
     <!--<script src="test.js"></script>-->
   </body>
