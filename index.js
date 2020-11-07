@@ -120,6 +120,9 @@ app.get("/movies/:name/director", (req, res) => {
   res.send("Success getting director data by director name.");
 });
 
+//initialize user object array.
+let users = [];
+
 //allow user to register an account
 app.post("/users", (req, res) => {
   let newUser = req.body;
