@@ -137,22 +137,22 @@ app.post("/users", (req, res) => {
 });
 
 //allow user to update username
-app.put("/user/:username", (req, res) => {
-  res.send("User name successfully updated");
+app.put("/users/:username", (req, res) => {
+  res.send("Username successfully updated");
 });
 
 //allow user to add movie to user movie list
-app.post("/user/:username/movies/:title", (req, res) => {
+app.post("/users/:username/movies/:title", (req, res) => {
   res.send("movie added to movie list");
 });
 
 //allow user to delete movie from movie list
-app.delete("/user/:username/movies/:title", (req, res) => {
+app.delete("/users/:username/movies/:title", (req, res) => {
   res.send("movie deleted from movie list.");
 });
 
 //allow user to deregister account
-app.delete("/user/:username", (req, res) => {
+app.delete("/users/:username", (req, res) => {
   res.send("username successfully removed");
 });
 
