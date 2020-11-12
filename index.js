@@ -1,7 +1,10 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
   uuid = require("uuid"),
-  morgan = require("morgan");
+  morgan = require("morgan"),
+  mongoose = require("mongoose"),
+  Models = require("./models.js");
+(Movies = Models.Movie), (Users = Models.User);
 
 const app = express();
 
