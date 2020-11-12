@@ -6,6 +6,11 @@ const express = require("express"),
   Models = require("./models.js");
 (Movies = Models.Movie), (Users = Models.User);
 
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
 const app = express();
 
 app.use(bodyParser.json());
