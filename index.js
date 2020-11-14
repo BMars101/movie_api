@@ -22,7 +22,11 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-let movies = [
+app.get("/", (req, res) => {
+  res.send("Welcome to myFlix!");
+});
+
+/*let movies = [
   {
     title: "Almost Famous",
     director: {
@@ -98,7 +102,7 @@ let movies = [
     image: "imageURL",
     feature: true
   }
-];
+];*/
 
 app.get("/movies", (req, res) => {
   Movies.find()
@@ -110,8 +114,6 @@ app.get("/movies", (req, res) => {
       res.status(500).send("Error: " + err);
     });
 });
-/*res.json(movies);
-});*/
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
@@ -124,26 +126,29 @@ app.get("/movies/:title", (req, res) => {
       res.status(500).send("Error: " + err);
     });
 });
-/*res.json(
-    movies.find(movie => {
-      return movie.title === req.params.title;
-    })
-  );
-});*/
 
 //get movie genre and description by title
-app.get("/movies/:title/genre", (req, res) => {
-  res.json(
-    movies.find(movie => {
-      return movie.director === req.params.director;
+app.get("/movies/genre/:title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then(movie => {
+      res.json(movie);
     })
-  );
-  res.send("Success getting movie genre by title");
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //get information on director by director name
-app.get("/movies/:name/director", (req, res) => {
-  res.send("Success getting director data by director name.");
+app.get("/movies/director/:name", (req, res) => {
+  Movies.findOne({ Directors: req.params.Name })
+    .then(movie => {
+      res.json(movie);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //initialize user object array.
@@ -226,7 +231,7 @@ app.put("/users/:Username", (req, res) => {
 });
 
 //allow user to add movie to user movie list
-app.post("/users/:username/movies/:title", (req, res) => {
+app.post("/users/:Username/movies/:Title", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -245,8 +250,20 @@ app.post("/users/:username/movies/:title", (req, res) => {
 });
 
 //allow user to delete movie from movie list
-app.delete("/users/:username/movies/:title", (req, res) => {
-  res.send("movie deleted from movie list.");
+app.delete("/users/:Username/movies/:Title", (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }),
+    {
+      $pull: { FavoriteMovies: req.params.Title }
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    };
 });
 
 //allow user to deregister account
@@ -267,9 +284,5 @@ app.delete("/users/:username", (req, res) => {
 
 /*res.send("username successfully removed");
 });*/
-
-app.get("/", (req, res) => {
-  res.send("Welcome to myFlix!");
-});
 
 app.listen(8080, () => console.log("Your app is listening on port 8080."));
