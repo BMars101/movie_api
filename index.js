@@ -26,84 +26,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
 
-/*let movies = [
-  {
-    title: "Almost Famous",
-    director: {
-      name: "Cameron Crowe",
-      bio:
-        "Cameron Crowe was born in Palm Springs, CA. Crowe skipped grades as a young man and began writing music reviews for 'The San Diego Door' at the age of 13. Crowe graduated from University of San Diego High School and subsequently became Rolling Stone's youngest ever contributor. Crowe's first film based on the book he wrote, Fast Times at Ridgemont High.",
-      birthyear: 1957,
-      deathyear: "-"
-    },
-    genre: "drama",
-    description:
-      "Almost famous is a semi-biographical film based on the life of director Cameron Crowe detailing his path to becoming a writer for Rolling Stone Magazine.",
-    image: "imageURL",
-    feature: true
-  },
-  {
-    title: "Moulin Rouge",
-    director: {
-      name: "Baz Luhrmann",
-      bio:
-        "Baz Luhrmann is an Australian director who also has numerous other accomplishments such as being a writer and producer",
-      birthyear: 1962,
-      deathyear: "-"
-    },
-    genre: "musical",
-    description:
-      "Moulin Rouge is a musical drama based on the Paris cabaret in the late 19th and early 20th centuries. Moulin Rouge chronicles the love story between a poor writer and a high class courtesan",
-    image: "imgURL",
-    feature: true
-  },
-  {
-    title: "True Romance",
-    director: {
-      name: "Tony Scott",
-      bio:
-        "Tony Scott was an English film director and producer.  His other notable works include Man on Fire, Enemy of the State and Unstoppable.",
-      birthyear: 1944,
-      deathyear: 2012
-    },
-    genre: "action",
-    description:
-      "Two unassuming lovers cross paths after Clarence Worley's co-worker sends a callgirl to meet him in a movie theater. Danger and adventure ensue.",
-    image: "imageURL",
-    feature: true
-  },
-  {
-    title: "Empire Records",
-    director: {
-      name: "Allan Moyle",
-      bio:
-        "Allan Moyle was born in the Quebec province of Canada. His other notable film is Pump Up the Volume.",
-      birthyear: 1947,
-      deathyear: "-"
-    },
-    genre: "drama",
-    description:
-      "teenagers working at a record store save the day after a co-worker blows all the store's money gambling.",
-    image: "imageURL",
-    feature: true
-  },
-  {
-    title: "Dazed and Confused",
-    director: {
-      name: "Richard Linklater",
-      bio:
-        "Richard Linklater is a film director and producer whose works typically focus on suburban culture and the passage of time.",
-      birthyear: 1960,
-      deathyear: "-"
-    },
-    genre: "comedy",
-    description:
-      "It's the last day of school and it's time for the incoming freshmen to endure initiation into high school culture.",
-    image: "imageURL",
-    feature: true
-  }
-];*/
-
 app.get("/movies", (req, res) => {
   Movies.find()
     .then(movies => {
@@ -128,8 +50,8 @@ app.get("/movies/:title", (req, res) => {
 });
 
 //get movie genre and description by title
-app.get("/movies/genre/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+app.get("/movies/:title/genre", (req, res) => {
+  Movies.find({ "Genre.Name": req.params.Genre })
     .then(movie => {
       res.json(movie);
     })
@@ -140,8 +62,8 @@ app.get("/movies/genre/:title", (req, res) => {
 });
 
 //get information on director by director name
-app.get("/movies/director/:name", (req, res) => {
-  Movies.findOne({ "Director.Name": req.params.Name })
+app.get("/movies/:name/director", (req, res) => {
+  Movies.find({ "Director.Name": req.params.Name })
     .then(movie => {
       res.json(movie);
     })
