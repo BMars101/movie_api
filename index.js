@@ -101,17 +101,35 @@ let movies = [
 ];
 
 app.get("/movies", (req, res) => {
-  res.json(movies);
+  Movies.find()
+    .then(movies => {
+      res.status(201).json(movies);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
+/*res.json(movies);
+});*/
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
-  res.json(
+  Movies.findOne({ Title: req.params.Title })
+    .then(movie => {
+      res.json(movie);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+/*res.json(
     movies.find(movie => {
       return movie.title === req.params.title;
     })
   );
-});
+});*/
 
 //get movie genre and description by title
 app.get("/movies/:title/genre", (req, res) => {
