@@ -59,7 +59,7 @@
       </tr>
       <tr>
         <td>Get information about a director by name</td>
-        <td>/movies/:director</td>
+        <td>/movies/director/:name</td>
         <td>GET</td>
         <td>None</td>
         <td>
@@ -107,7 +107,7 @@
 
       <tr>
         <td>Add a movie to movie list</td>
-        <td>users/:username/movies/:title</td>
+        <td>users/:username/movies/:movieID</td>
         <td>POST</td>
         <td>
           JSON object with movie details <br />{<br />
@@ -132,7 +132,7 @@
       </tr>
       <tr>
         <td>Delete a movie from movie list</td>
-        <td>user/:username/movies/:title</td>
+        <td>user/:username/movies/:movieID</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
@@ -154,6 +154,5 @@
     </table>
 
     <script src="index.js"></script>
-    <!--<script src="test.js"></script>-->
   </body>
 </html>
