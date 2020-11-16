@@ -4,7 +4,9 @@ const express = require("express"),
   morgan = require("morgan"),
   mongoose = require("mongoose"),
   Models = require("./models.js");
-(Movies = Models.Movie), (Users = Models.User);
+
+const Movies = Models.Movie;
+const Users = Models.User;
 
 mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
@@ -39,9 +41,9 @@ app.get("/movies", (req, res) => {
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.title })
     .then(movie => {
-      res.json(movie);
+      res.status(201).json(movie);
     })
     .catch(err => {
       console.error(err);
@@ -51,9 +53,14 @@ app.get("/movies/:title", (req, res) => {
 
 //get movie genre and description by title
 app.get("/movies/:title/genre", (req, res) => {
-  Movies.find({ Title: req.params.Title })
+  Movies.find({ Title: req.params.title })
     .then(movie => {
-      res.json(movie.genre.name + movie.genre.description);
+      res
+        .status(201)
+        .json({
+          Genre: movie.Genre.Name,
+          Description: movie.Genre.Description
+        });
     })
     .catch(err => {
       console.error(err);
@@ -65,16 +72,13 @@ app.get("/movies/:title/genre", (req, res) => {
 app.get("/movies/:name/director", (req, res) => {
   Movies.find({ "Director.Name": req.params.Name })
     .then(movie => {
-      res.json(movie.director.name + movie.director.bio);
+      res.json(movie);
     })
     .catch(err => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
 });
-
-//initialize user object array.
-let users = [];
 
 //allow user to register an account
 app.post("/users", (req, res) => {
