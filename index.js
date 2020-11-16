@@ -36,7 +36,7 @@ app.get("/movies", (req, res) => {
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.title })
     .then(movie => {
       res.status(201).json(movie);
     })
@@ -48,7 +48,7 @@ app.get("/movies/:title", (req, res) => {
 
 //get movie genre and description by title
 app.get("/movies/genre/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.title })
     .then(movie => {
       res.status(201).json({
         Genre: movie.Genre.Name,
@@ -63,8 +63,9 @@ app.get("/movies/genre/:title", (req, res) => {
 
 //get information on director by director name
 app.get("/movies/director/:name", (req, res) => {
-  Movies.findOne({ "Director.Name": req.params.Name })
+  Movies.findOne({ "Director.Name": req.params.name })
     .then(movie => {
+      console.log(movie);
       res.status(201).json({
         Bio: movie.Director.Bio,
         Birth: movie.Director.Birth,
@@ -79,16 +80,16 @@ app.get("/movies/director/:name", (req, res) => {
 
 //allow user to register an account
 app.post("/users", (req, res) => {
-  Users.findOne({ Username: req.body.Username })
+  Users.findOne({ Username: req.body.username })
     .then(user => {
       if (user) {
-        return res.status(400).send(req.body.Username + " already exists");
+        return res.status(400).send(req.body.username + " already exists");
       } else {
         Users.create({
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
+          Username: req.body.username,
+          Password: req.body.password,
+          Email: req.body.email,
+          Birthday: req.body.birthday
         })
           .then(user => {
             res.status(201).json(user);
@@ -119,7 +120,7 @@ app.get("/users", (req, res) => {
 
 //Get user by username
 app.get("/users/:username", (req, res) => {
-  Users.findOne({ Username: req.params.Username })
+  Users.findOne({ Username: req.params.username })
     .then(user => {
       res.json(user);
     })
@@ -132,13 +133,13 @@ app.get("/users/:username", (req, res) => {
 //allow user to update username
 app.put("/users/:username", (req, res) => {
   Users.findOneAndUpdate(
-    { Username: req.params.Username },
+    { Username: req.params.username },
     {
       $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
+        Username: req.body.username,
+        Password: req.body.password,
+        Email: req.body.email,
+        Birthday: req.body.birthday
       }
     },
     { new: true },
@@ -156,9 +157,9 @@ app.put("/users/:username", (req, res) => {
 //allow user to add movie to user movie list
 app.post("/users/:username/movies/:movieID", (req, res) => {
   Users.findOneAndUpdate(
-    { Username: req.params.Username },
+    { Username: req.params.username },
     {
-      $push: { FavoriteMovies: req.params.MovieID }
+      $push: { FavoriteMovies: req.params.movieID }
     },
     { new: true },
     (err, updatedUser) => {
