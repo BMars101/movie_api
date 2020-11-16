@@ -19,11 +19,6 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(morgan("common"));
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
-
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
@@ -41,7 +36,7 @@ app.get("/movies", (req, res) => {
 
 //get movie information by title
 app.get("/movies/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.title })
+  Movies.findOne({ Title: req.params.Title })
     .then(movie => {
       res.status(201).json(movie);
     })
@@ -53,7 +48,7 @@ app.get("/movies/:title", (req, res) => {
 
 //get movie genre and description by title
 app.get("/movies/genre/:title", (req, res) => {
-  Movies.findOne({ Title: req.params.title })
+  Movies.findOne({ Title: req.params.Title })
     .then(movie => {
       res.status(201).json({
         Genre: movie.Genre.Name,
@@ -68,7 +63,7 @@ app.get("/movies/genre/:title", (req, res) => {
 
 //get information on director by director name
 app.get("/movies/director/:name", (req, res) => {
-  Movies.findOne({ "Director.Name": req.params.name })
+  Movies.findOne({ "Director.Name": req.params.Name })
     .then(movie => {
       res.status(201).json({
         Bio: movie.Director.Bio,
@@ -161,9 +156,9 @@ app.put("/users/:username", (req, res) => {
 //allow user to add movie to user movie list
 app.post("/users/:username/movies/:movieID", (req, res) => {
   Users.findOneAndUpdate(
-    { Username: req.params.username },
+    { Username: req.params.Username },
     {
-      $push: { FavoriteMovies: req.params.movieID }
+      $push: { FavoriteMovies: req.params.MovieID }
     },
     { new: true },
     (err, updatedUser) => {
@@ -210,7 +205,9 @@ app.delete("/users/:username", (req, res) => {
     });
 });
 
-/*res.send("username successfully removed");
-});*/
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 app.listen(8080, () => console.log("Your app is listening on port 8080."));
