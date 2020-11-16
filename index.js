@@ -52,8 +52,8 @@ app.get("/movies/:title", (req, res) => {
 });
 
 //get movie genre and description by title
-app.get("/movies/:title/genre", (req, res) => {
-  Movies.find({ Title: req.params.title })
+app.get("/movies/genre/:title", (req, res) => {
+  Movies.findOne({ Title: req.params.title })
     .then(movie => {
       res.status(201).json({
         Genre: movie.Genre.Name,
@@ -67,8 +67,8 @@ app.get("/movies/:title/genre", (req, res) => {
 });
 
 //get information on director by director name
-app.get("/movies/:name/director", (req, res) => {
-  Movies.find({ "Director.Name": req.params.Name })
+app.get("/movies/director/:name", (req, res) => {
+  Movies.findOne({ "Director.Name": req.params.name })
     .then(movie => {
       res.status(201).json({
         Bio: movie.Director.Bio,
