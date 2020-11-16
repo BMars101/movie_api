@@ -51,8 +51,8 @@ app.get("/movies/genre/:title", (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then(movie => {
       res.status(201).json({
-        Genre: movie.Genre.Name,
-        Description: movie.Genre.Description
+        Genre: movie.genre.name,
+        Description: movie.genre.description
       });
     })
     .catch(err => {
@@ -67,9 +67,9 @@ app.get("/movies/director/:name", (req, res) => {
     .then(movie => {
       console.log(movie);
       res.status(201).json({
-        Bio: movie.Director.Bio,
-        Birth: movie.Director.Birth,
-        Death: movie.Director.Death
+        Bio: movie.director.bio,
+        Birth: movie.director.birth,
+        Death: movie.director.death
       });
     })
     .catch(err => {
