@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(morgan("common"));
 
+let auth = require("./auth")(app);
+
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
