@@ -5,6 +5,9 @@ const express = require("express"),
   mongoose = require("mongoose"),
   Models = require("./models.js");
 
+const passport = require("passport");
+require("./passport");
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
