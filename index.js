@@ -67,6 +67,7 @@ app.get("/movies/director/:name", (req, res) => {
     .then(movie => {
       console.log(movie);
       res.status(201).json({
+        //Name: movie.director.name,
         Bio: movie.director.bio,
         Birth: movie.director.birth,
         Death: movie.director.death
