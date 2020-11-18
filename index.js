@@ -56,8 +56,8 @@ app.get("/movies/genre/:title", (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then(movie => {
       res.status(201).json({
-        Genre: movie.genre.name,
-        Description: movie.genre.description
+        Genre: movie.Genre.Name,
+        Description: movie.Genre.Description
       });
     })
     .catch(err => {
@@ -72,10 +72,10 @@ app.get("/movies/director/:name", (req, res) => {
     .then(movie => {
       console.log(movie);
       res.status(201).json({
-        Name: movie.director.name,
-        Bio: movie.director.bio,
-        Birth: movie.director.birth,
-        Death: movie.director.death
+        Name: movie.Director.Name,
+        Bio: movie.Director.Bio,
+        Birth: movie.Director.Birth,
+        Death: movie.Director.Death
       });
     })
     .catch(err => {
@@ -181,7 +181,8 @@ app.post("/users/:username/movies/:movieID", (req, res) => {
 
 //allow user to delete movie from movie list
 app.delete("/users/:username/movies/:movieID", (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.username }),
+  Users.findOneAndUpdate(
+    { Username: req.params.username },
     {
       $pull: { FavoriteMovies: req.params.movieID }
     },
@@ -193,7 +194,8 @@ app.delete("/users/:username/movies/:movieID", (req, res) => {
       } else {
         res.json(updatedUser);
       }
-    };
+    }
+  );
 });
 
 //allow user to deregister account
