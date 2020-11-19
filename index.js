@@ -103,7 +103,7 @@ app.get(
 //allow user to register an account
 app.post(
   "/users",
-  passport.authenticate("jwt", { session: false }),
+  //passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.body.Username })
       .then(user => {
