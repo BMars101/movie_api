@@ -5,9 +5,6 @@ const express = require("express"),
   mongoose = require("mongoose"),
   Models = require("./models.js");
 
-const passport = require("passport");
-require("./passport");
-
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -23,6 +20,9 @@ app.use(express.static("public"));
 app.use(morgan("common"));
 
 let auth = require("./auth")(app);
+
+const passport = require("passport");
+require("./passport");
 
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
@@ -90,10 +90,10 @@ app.get("/movies/director/:name", (req, res) => {
 
 //allow user to register an account
 app.post("/users", (req, res) => {
-  Users.findOne({ Username: req.body.username })
+  Users.findOne({ Username: req.body.Username })
     .then(user => {
       if (user) {
-        return res.status(400).send(req.body.username + " already exists");
+        return res.status(400).send(req.body.Username + " already exists");
       } else {
         Users.create({
           Username: req.body.Username,
