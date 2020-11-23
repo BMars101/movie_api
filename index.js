@@ -217,7 +217,7 @@ app.put(
       {
         $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
@@ -245,16 +245,15 @@ app.post(
       {
         $push: { FavoriteMovies: req.params.movieID }
       },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        } else {
-          res.json(updatedUser);
-        }
-      }
-    );
+      { new: true }
+    )
+      .then(updatedUser => {
+        res.status(201).json(updatedUser);
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
   }
 );
 
@@ -268,16 +267,15 @@ app.delete(
       {
         $pull: { FavoriteMovies: req.params.movieID }
       },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        } else {
-          res.json(updatedUser);
-        }
-      }
-    );
+      { new: true }
+    )
+      .then(updatedUser => {
+        res.status(201).json(updatedUser);
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
   }
 );
 
