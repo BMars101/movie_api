@@ -193,31 +193,14 @@ app.get(
 //allow user to update username
 app.put(
   "/users/:username",
-  [
-    check("Username", "Username is required").isLength({ min: 5 }),
-    check(
-      "Username",
-      "Username contains non alphanumberic characters - not allowed."
-    ).isAlphanumeric(),
-    check("Password", "Password is required")
-      .not()
-      .isEmpty(),
-    check("Email", "Email does not appear to be valid").isEmail()
-  ],
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: hashedPassword,
+          Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
