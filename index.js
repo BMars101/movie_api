@@ -222,16 +222,15 @@ app.put(
           Birthday: req.body.Birthday
         }
       },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        } else {
-          res.json(updatedUser);
-        }
-      }
-    );
+      { new: true }
+    )
+      .then(updatedUser => {
+        res.status(201).json(updatedUser);
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
   }
 );
 
