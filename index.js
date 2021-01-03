@@ -8,7 +8,9 @@ const express = require("express"),
 
 const { check, validationResult } = require("express-validator");
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 
 const Movies = Models.Movie;
 const Users = Models.User;
