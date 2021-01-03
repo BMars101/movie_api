@@ -8,27 +8,27 @@ const express = require("express"),
 
 const { check, validationResult } = require("express-validator");
 
+app.use(cors());
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect("mongodb://localhost:27017/myFlixDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-/*mongoose.connect(process.env.CONNECTION_URI, {
+/*mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });*/
+
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(morgan("common"));
-app.use(cors({
-  origin: "*"
-}));
+
 
 let auth = require("./auth.js")(app);
 
