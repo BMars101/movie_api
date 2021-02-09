@@ -1,10 +1,10 @@
-const express = require("express"),
-  bodyParser = require("body-parser"),
-  uuid = require("uuid"),
-  morgan = require("morgan"),
-  mongoose = require("mongoose"),
-  Models = require("./models.js"),
-  cors = require("cors");
+const express = require("express");
+const bodyParser = require("body-parser");
+const uuid = require("uuid");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const Models = require("./models.js");
+const cors = require("cors");
 
 const { check, validationResult } = require("express-validator");
 
@@ -13,15 +13,26 @@ const { check, validationResult } = require("express-validator");
 const Movies = Models.Movie;
 const Users = Models.User;
 
+//This will connect from local client to local db
 /*mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });*/
 
-mongoose.connect(process.env.CONNECTION_URI, {
+
+
+
+//This will connect from local client to heroku db
+mongoose.connect("mongodb://BMars101:lANDisAVE10123@cluster0.iuiny.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+//This will connect from heroku client to heroku db
+// mongoose.connect(process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
 
 const app = express();
 
@@ -44,7 +55,7 @@ app.get("/movies", passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then(movies => {
-        res.status(201).json(movies);
+        res.status(200).json(movies);
       })
       .catch(err => {
         console.error(err);
@@ -60,7 +71,7 @@ app.get(
   (req, res) => {
     Movies.findOne({ Title: req.params.title })
       .then(movie => {
-        res.status(201).json(movie);
+        res.status(200).json(movie);
       })
       .catch(err => {
         console.error(err);
@@ -76,7 +87,7 @@ app.get(
   (req, res) => {
     Movies.findOne({ Title: req.params.title })
       .then(movie => {
-        res.status(201).json({
+        res.status(200).json({
           Genre: movie.Genre.Name,
           Description: movie.Genre.Description
         });
@@ -96,7 +107,7 @@ app.get(
     Movies.findOne({ "Director.Name": req.params.name })
       .then(movie => {
         console.log(movie);
-        res.status(201).json({
+        res.status(200).json({
           Name: movie.Director.Name,
           Bio: movie.Director.Bio,
           Birth: movie.Director.Birth,
@@ -144,7 +155,7 @@ app.post(
             Birthday: req.body.Birthday
           })
             .then(user => {
-              res.status(201).json(user);
+              res.status(200).json(user);
             })
             .catch(error => {
               console.error(error);
@@ -166,7 +177,7 @@ app.get(
   (req, res) => {
     Users.find()
       .then(users => {
-        res.status(201).json(users);
+        res.status(200).json(users);
       })
       .catch(err => {
         console.error(err);
@@ -191,7 +202,7 @@ app.get(
   }
 );
 
-//allow user to update username
+//allow user to update user details
 app.put(
   "/users/:username",
   [
@@ -226,7 +237,7 @@ app.put(
       { new: true }
     )
       .then(updatedUser => {
-        res.status(201).json(updatedUser);
+        res.status(200).json(updatedUser);
       })
       .catch(error => {
         console.error(error);
@@ -248,7 +259,7 @@ app.post(
       { new: true }
     )
       .then(updatedUser => {
-        res.status(201).json(updatedUser);
+        res.status(200).json(updatedUser);
       })
       .catch(error => {
         console.error(error);
@@ -270,7 +281,7 @@ app.delete(
       { new: true }
     )
       .then(updatedUser => {
-        res.status(201).json(updatedUser);
+        res.status(200).json(updatedUser);
       })
       .catch(error => {
         console.error(error);
