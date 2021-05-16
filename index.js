@@ -23,16 +23,16 @@ const Users = Models.User;
 
 
 //This will connect from local client to heroku db
-mongoose.connect("mongodb://BMars101:lANDisAVE10123@cluster0.iuiny.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-//This will connect from heroku client to heroku db
-// mongoose.connect(process.env.CONNECTION_URI, {
+// mongoose.connect("mongodb://BMars101:lANDisAVE10123@cluster0.iuiny.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true
 // });
+
+//This will connect from heroku client to heroku db
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const app = express();
 
