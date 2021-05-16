@@ -225,7 +225,7 @@ app.put(
 
     let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate(
-      { Username: req.params.Username },
+      { Username: req.params.username },
       {
         $set: {
           Username: req.body.Username,
